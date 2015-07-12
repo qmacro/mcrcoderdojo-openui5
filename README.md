@@ -1,5 +1,5 @@
 # mcrcoderdojo-openui5
-5 Step Simple OpenUI5 App Example for Manchester CoderDojo
+A 5 Step Simple OpenUI5 App Example for Manchester CoderDojo
 
 On Sun 12 July at [The Sharp Project](http://www.thesharpproject.co.uk/), we ran a
 [Manchester CoderDojo](http://mcrcoderdojo.org.uk/) event. One of the workshops was on building a simple 
