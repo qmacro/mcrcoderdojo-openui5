@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta charset="UTF-8">
+
+		<title>McrCoderDojo : Public Github Repos for Users</title>
+
+		<script id="sap-ui-bootstrap"
+			type="text/javascript"
+			src="https://openui5.hana.ondemand.com/resources/sap-ui-core.js"
+			data-sap-ui-theme="sap_bluecrystal"
+			data-sap-ui-libs="sap.m"
+			data-sap-ui-xx-bindingSyntax="complex"
+		>
+		</script>
+
+		<script id="main" type="ui5/xmlview">
+			<mvc:View
+				controllerName="local.controller.main"
+				displayBlock="true"
+				xmlns:mvc="sap.ui.core.mvc"
+				xmlns:core="sap.ui.core"
+				xmlns="sap.m">
+				<App>
+					<Page
+						title="McrCoderDojo : Github Repos">
+						<content>
+							<List
+								noDataText="No repositories"
+								items="{/}">
+								<items>
+									<StandardListItem
+										icon="{owner/avatar_url}"
+										title="{name}"
+										description="{description}" />
+								</items>
+							</List>
+						</content>
+						<footer>
+							<Bar>
+								<contentRight>
+									<Select id="idLoginSelect"
+										change="onLoginChange"
+										items="{users>/logins}">
+										<items>
+											<core:Item
+												key="{users>id}"
+												text="{users>id}" />
+										</items>
+									</Select>
+								</contentRight>
+							</Bar>
+						</footer>
+					</Page>
+				</App>
+			</mvc:View>
+		</script>
+
+
+		<script>
+
+		// Local controller
+		sap.ui.controller("local.controller.main", {
+
+			sInitialLogin : "jcla1",
+			_oView : null,
+			_oModel : null,
+			_oUserModel : null,
+
+			onInit : function() {
+				this._oView = this.getView();
+				this._oModel = new sap.ui.model.json.JSONModel();
+				this._oUserModel = new sap.ui.model.json.JSONModel({
+					logins : [
+							{ id : "jcla1" },
+							{ id : "qmacro" } ,
+							{ id : "anthonyharrison" }
+					]
+				});
+				this._oView.setModel(this._oModel);
+				this._oView.setModel(this._oUserModel, "users");
+				this._oView.byId("idLoginSelect")
+					.setSelectedKey(this.sInitialLogin);
+				this.loadRepos(this.sInitialLogin);
+			},
+
+			onLoginChange : function(oEvent) {
+				if (!this._oModel) {
+					this._oModel = this._oView.getModel();
+				}
+				this.loadRepos(oEvent.getParameter("selectedItem").getKey());
+			},
+
+			loadRepos : function(sLogin) {
+				var sUrl = "https://api.github.com/users/" + sLogin + "/repos";
+				this._oModel.loadData(sUrl);
+			}
+
+		});
+
+		sap.ui.xmlview({ viewContent: jQuery("#main").html() }).placeAt("content");
+
+		</script>
+	</head>
+
+	<body id="content"
+		class="sapUiBody" />
+</html>
