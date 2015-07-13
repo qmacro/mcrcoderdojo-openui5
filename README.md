@@ -5,6 +5,8 @@ On Sun 12 July at [The Sharp Project](http://www.thesharpproject.co.uk/), we ran
 [Manchester CoderDojo](http://mcrcoderdojo.org.uk/) event. One of the workshops was on building a simple 
 responsive app with the [OpenUI5 toolkit](http://openui5.org). 
 
+![image](students.png)
+
 In 5 steps, we moved from a simple Button to a small app where you could view public Github repos
 for selected users. 
 
